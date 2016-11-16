@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js">
+</script>
+    
+    Welcome Faculty {{username}} <a href="logout">Logout</a>
+ <a href="#addcourse">Add Course</a>
+ <a href="#viewcourse">View Course</a>
+{% verbatim %}
+<body ng-app="facultyPage">
+
+<div ng-view></div>
+
+<script>
+ //   var django_variables = {};
+//django_variables.djangoVar = {{ courselist }};
+var app = angular.module("facultyPage", ['ngRoute']);
+app.config(function($routeProvider) {
+    $routeProvider
+    .when("/addcourse", {
+        templateUrl : "staff_course_input_form"
+    })
+    .when("/viewcourse",{
+        templateUrl:"faculty_course_partial_view",
+        controller:"courseViewController"
+    })
+});  
+app.controller("courseViewController", function ($scope) 
+{
+   $scope.coursesave = function(){
+    $scope.courseNameArray = [];
+    angular.forEach($scope.courselists, function(courses){
+      if (courses.selected) $scope.courseNameArray.push(courses.name);
+    });
+  };    
+});
+</script>
+{% endverbatim %}
+
+</body>
+</html>

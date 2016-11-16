@@ -1,0 +1,28 @@
+<h2>List of Faculties</h2>
+<div ng-init='facultylists={{fac2}}'>
+{%verbatim%}
+{{searchlabel}}
+     <input type="text" ng-model="name"/>
+    <table>
+    <thead>
+        <th>Id</th>
+    <th>Name</th>
+    <th>Department</th>
+    <th>Username</th>
+    <th>Permanent</th>
+    </thead>
+    <tr data-ng-repeat="faculties in facultylists|filter:name">
+        <td><a href='staff_delete?id={{faculties.id}}&type=
+"Faculty"'>Delete</a></td>
+        <td>
+        <a href='staff_faculty_edit?id={{faculties.id}}'>Edit</a></td>
+        <td>{{faculties.id}}</td>
+        <td>{{faculties.facultyname}}</td>
+        <td>{{faculties.department}}</td>
+        <td>{{faculties.username}}</td>
+        <td>{{faculties.isperm}}</td>
+        
+    </tr>
+    </table>
+        </div>
+{%endverbatim%}

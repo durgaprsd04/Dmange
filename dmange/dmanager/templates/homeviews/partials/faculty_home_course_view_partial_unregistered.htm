@@ -1,0 +1,37 @@
+<h2>List of Unregistered courses</h2>
+
+<div  ng-init='courselists={{courselist}}' onsubmit="#">
+<form>
+</p>Enter Start date<input name="startdate" type="date"/>
+</p>Enter end date <input name="enddate" type="date"/>
+</p>Enter faculty id <input name="faculty_id" type="text"/>
+</p>{{searchlabel}}
+{%verbatim%}
+     <input type="text" ng-model="coursename"/>
+    <table id="unregcoursetable">
+    <thead>
+    <th>Course Id</th>
+    <th>Course Code</th>
+    <th>Name</th>
+    <th>Program</th>
+    </thead>
+    <tr data-ng-repeat="courses in courselists|filter:coursename">
+        <td><input type="checkbox"
+                    ng-model="courses.selected"
+                   />
+        {{courses.id}}</td>
+        <td>{{courses.coursecode}}</td>
+        <td>{{courses.name}}</td>
+        <td>{{courses.program}}</td>
+    </tr>
+    </table>
+
+
+Saved results:<br>{{courseNameArray}}
+<input type="hidden" name="courselist" value=" {{courseNameArray}}"/>
+<br>
+<input type="submit"  ng-click="coursesave()"/>
+</form>
+{%endverbatim%}
+
+

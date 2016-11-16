@@ -1,0 +1,122 @@
+<html>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js">
+</script>
+    <h1>Welcome to staff home</h1>
+    <table>
+        <tr>        
+    <td>
+    <ul>
+    <li><a href="#viewcourses">View Courses</a></li>
+    <li><a href="#viewstudents">View Students</a></li>
+    <li><a href="#viewfaculties">View Faculty</a></li>
+    <li><a href="#viewdepartments">View Departments</a></li>
+    <li><a href="#viewstaffs">View Staff</a></li>
+    </ul>
+    </td>
+                           
+    <td>
+    <ul>
+    <li><a href="#addcourse">Add Course</a></li>    
+    <li><a href="#addstudent">Add Student</a></li>
+    <li><a href="#addfaculty">Add Faculty</a></li>
+    <li><a href="#adddepartment">Add Departments</a></li>
+    <li><a href="#addstaff">Add Staff</a></li>
+    </ul>
+    </td>
+            
+        </tr>
+        </table>
+    {% if studentsadded %}
+    <p>{{studentsadded}} Student(s) added  successfully</p>
+    {%endif%}
+    {% if coursesadded  %}
+    <p>{{coursesadded}} Course(s) added  successfully</p>
+    {%endif%}
+    {% if facultyadded %}
+    <p>{{facultyadded}} Facultie(s) added  successfully</p>
+    {%endif%}
+    {% if departmentsadded %}
+    <p>{{departmentsadded}} Department(s) added  successfully</p>
+    {%endif%}
+    {% if staffadded %}
+    <p>{{staffadded}} staff(s) added  successfully</p>
+    {%endif%}
+    
+    {% if facultydeleted %}
+    <p>{{facultydeleted}} staff with {{facultyid}} deleted  successfully</p>
+    {%endif%}
+    <table>
+    <tr>
+        <td>Welcome User</td><td><b>{{username}}</b></td><td><a href="logout">Logout</a></td>
+        </tr>
+    </table>
+    <body ng-app="staffpage">
+     {% verbatim %}
+
+        
+    <div ng-view></div>
+       
+        <script>
+        
+        var app = angular.module("staffpage", ['ngRoute']);
+app.config(function($routeProvider) {
+    $routeProvider
+    .when("/viewcourses", {
+        templateUrl : "staff_course_partial_view",
+        controller:'CourseController'
+    }).when("/viewstudents", {
+        templateUrl : "staff_student_partial_view",
+         controller:'StudentController'
+    }).when("/viewfaculties", {
+        templateUrl : "staff_faculty_partial_view",
+        controller:'FacultyController'
+    }).when("/viewdepartments", {
+        templateUrl : "staff_department_partial_view",
+        controller:'DepartmentController'
+    }).when("/viewstaffs", {
+        templateUrl : "staff_staff_partial_view",
+        controller:'StaffController'
+    
+    }).when("/addstudent",{
+        templateUrl:"staff_student_input_form"    
+    }).when("/addcourse",{
+        templateUrl:"staff_course_input_form"    
+    }).when("/addfaculty",{
+        templateUrl:"staff_faculty_input_form"    
+    }).when("/adddepartment",{
+        templateUrl:"staff_department_input_form"    
+    }).when("/addstaff",{
+        templateUrl:"staff_staff_input_form"    
+    })
+    ;
+}); 
+app.controller('FacultyController', function($scope){
+   $scope.searchlabel="Search Faculties"; 
+    //$scope.facultylists = '{{fac2}}';
+});
+app.controller('StudentController', function($scope){
+   $scope.searchlabel="Search Students"; 
+    //$scope.facultylists = '{{fac2}}';
+});
+app.controller('CourseController', function($scope){
+   $scope.searchlabel="Search Courses"; 
+    //$scope.facultylists = '{{fac2}}';
+});
+app.controller('DepartmentController', function($scope){
+   $scope.searchlabel="Search Departments"; 
+    //$scope.facultylists = '{{fac2}}';
+});
+app.controller('StaffController', function($scope){
+   $scope.searchlabel="Search Staff"; 
+    //$scope.facultylists = '{{fac2}}';
+});
+
+
+
+
+        </script>
+   
+    {%endverbatim%}
+         </body>
+<html>

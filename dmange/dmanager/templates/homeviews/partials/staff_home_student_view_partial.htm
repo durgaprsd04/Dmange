@@ -1,0 +1,23 @@
+<h2>List of Students</h2>
+<div  ng-init='studentlists={{studentlist}}'>
+{%verbatim%}
+{{searchlabel}}
+     <input type="text" ng-model="coursename"/>
+    <table>
+    <thead>
+    <th>Rollnumber</th>
+    <th>Name</th>
+    <th>Program</th>
+    <th>Department</th>
+    <th>Specialisation</th>
+    </thead>
+    <tr data-ng-repeat="students in studentlists|filter:coursename">
+        <td>{{students.rollnumber}}</td>
+        <td>{{students.studentname}}</td>
+        <td>{{students.program}}</td>
+        <td>{{students.department}}</td>
+        <td>{{students.specialization}}</td>
+    </tr>
+    </table>
+        </div>
+{%endverbatim%}

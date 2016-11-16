@@ -1,0 +1,153 @@
+After thinkin bout the way for some time, i thiught and thought and then found out how to do this, I was rather thinkin the whole setup could be done in such a way a wtha tthere shall not be any problem identifying anythin abad about the setup .
+
+I will brief it up  alittle.
+We will start with some basic stuff and then build on top of this.
+
+admin
+--adding student and faculties.
+
+student
+    student id
+    rollnumber(primary key)
+    name
+    program(UG/PG/PHD)
+    branch
+    specialization()
+    
+courses
+    courseid
+    coursecode
+    name
+    program
+    branch
+    
+faculty
+    facultyid
+    facutlyname
+    branch
+    temporaryor permanent
+
+registration-course table
+    reg-course id
+    facultyid
+    courseid
+    start
+    end
+    
+registration-student table
+    student-id 
+    reg-courseid
+
+staff
+    staffid
+    staffname
+    department
+
+
+$ data models cration done, then we have to add data to this and as well enable th eadmin and then add views and forms for data entry and viewing.
+
+$ After doing that we will go ahead and start with basic regisration, that is adding three separate logins for faculty students and then staff. 
+
+Faculties should be able to create courses, staff to create registration courses and students to register for a course.
+
+
+to start with it we have to create a new view for the facutly to see and add courses. 
+
+
+
+This would be the first draft of the work done, 
+
+The basic ideea behind this is to have  a certain set of flows pertaining to students faculties and staff.
+
+The first flow is course registration, creation of course by faculty or staff.
+
+Moving that course as a time limited activity.
+
+making it in such a way that a student can register for the particular course or activity.
+
+
+=-next to do-= 
+
+from now onwards we will be dong the whole thing in a different manner we will produce the login pages for student facutly and staff and then move the course to registration.
+
+
+after the basic workflow we will perfect on the UI.
+
+basic workflow will see to it that all faculties can create courses, and omve to registration provide a time period for it before mobing and assign any facutly to do it.
+
+staff can create course, cnnot move them or anything.
+
+student can register for moved courses/
+
+
+once the above functionality is achived I will stop developing the whole backend and start with front end perfecting.
+
+
+$ without the whole perfecting UI thing I dont' see this going anywhere.
+
+In  current state we don't know, what is happening, there is not indication of what is happening in the backend.
+
+
+    
+    tobedone
+    =========
+    |----adding staff(only one admin)
+    |----adding faculties (this should automatically generated like some rollnumber)
+    basic CURD permissions
+    username for both
+faculty
+    |----t
+    |----adding courses(department will be selected already, course code will be automatically populated.)
+    |----pushing courses to reg where students can register
+    |----adding staff(only one)
+    |----adding other facutly(only one)
+    |
+student
+    |----
+    |-----registering for courses.
+    |-----editing basic profile info. firstname lastname, password
+    |----- 
+    |
+    |
+
+
+
+doing some real things is whatI am interested  in .
+For example,we are doing this on the basis ofsome predefinedways of doing tuff. Never the less those notions are well under definitiosn of logic.
+
+fWhat i am going to dois now as the staff is there. we will use certain things of angular to maintain a userfriendly page that could get staff going, then facutly and finally students. Once the basic workflow of course registration is achieved  we will start developing it on the basis of that.
+nov-3
+====
+as of now the loading of data is done from django not from angular. So we cannot have all the features of angular such as search and sort and all that as it is not angular loaded data but just python loaded data. So the plan is to put a controller whihc will have the python data whihc passes it to the view. 
+more of the modularising we got from the angular tutorial.
+
+we will check if simple texts are shown in go up from there.
+
+it is working !!!!
+===================
+Extend the  searchability to all the other pages. 
+Test registration process.
+Make UI good enough, I would expect a bootstrap based UI.
+Modularising based on angular functionalities.
+
+
+Tue-11-09
+=========
+
+## Now we have extended the serach facilyt we will include the edit facilti in a wide range and start doing more with it.
+
+Edit facilty in one of the featues is enough. It is not  like anythign challenging, but a basic feature as it is.
+
+
+Wed-11-10
+More importantly the functionality of the application should be met before this could be made available. As of now this is fine. But by friday we will put the whole process into flow. Once that is done, hopefully we can start working on the UI.
+
+
+What we have planned for faculties ability to move the course to reg courses is seelcting the corresponding courses and selecting a comonn time nad date along with and ability to select faculty id(reassigning or confirm assigning can be made possible.)
+
+once the courses have been moved to reg studtns can register for the courses. Morever they coures will be shown only if both the departments match.
+
+after they register they will be populated in the reg studtns.After this these studetns will be shown in the student list facutlies can acces from their UI.
+
+The above mentioned set up and basic CURD for staff is the UI threshold. After that UI should be improved so that shippiong the project should be kept in mind.
+
