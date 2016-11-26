@@ -1,7 +1,36 @@
 <html>
+ <head>
+   <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+  <script src="../static/js/jquery.min.js"></script>
+  <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/angular-route.js"></script>
+<script src="../static/js/angular.js">
+</script>
+</head>
+    <div class="jumbotron">
+    <center>
+        <h2>DMange Institute Management System</h2>
+    </center>
+        </div>
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
     <form method="post">
     {%csrf_token%}
         {{form}}
-        <input type="submit"  value="Login" />
+        
+    </div>
+        <div class="col-md-4"></div>
+        
+<div class="col-md-5"></div>
+        
+       <center>
+         <div class="col-md-2">
+        
+        <input type="submit" class="btn btn-primary" value="Login"  />
+        </div>
+           </center>
+<div class="col-md-5"></div>        
     </form>
+    
+   
 </html>

@@ -1,15 +1,34 @@
+
 <h2>List of Unregistered courses</h2>
 
-<div  ng-init='courselists={{courselist}}' onsubmit="#">
-<form>
-</p>Enter Start date<input name="startdate" type="date"/>
-</p>Enter end date <input name="enddate" type="date"/>
-</p>Enter faculty id <input name="faculty_id" type="text"/>
-</p>{{searchlabel}}
+<div ng-init='courselists={{courselist}}'/>
+<div ng-init='listoffacs={{listoffacs}}'/>
+<form action="faculty_moveto_regcourses" method="post">
+{% csrf_token %}
+<div class="col-md-12">
+    <div class="col-md-4"></div>
+     <div class="col-md-4">
+    </p>Enter Start date<input name="startdate" type="date" class="form-control"/>
+</p>Enter end date <input name="enddate" type="date" class="form-control"/>
+
+ 
 {%verbatim%}
-     <input type="text" ng-model="coursename"/>
-    <table id="unregcoursetable">
-    <thead>
+    
+</p>Enter faculty id 
+<select ng-model="facname" class="form-control" name="faculty_id">
+<option ng-repeat="x in listoffacs" value="{{x.fid}}">{{x.fname}}</option>
+</select>
+
+</p> Search Courses
+<input type="text" ng-model="coursename" class="form-control"/>
+</div>
+<div class="col-md-4"></div>
+</div>
+   <div class="col-md-12">
+     <div class="col-md-3"></div>
+       <div class="col-md-6">
+    <table id="unregcoursetable" class="table table-hover">
+    <thead class="thead thead-inverse">
     <th>Course Id</th>
     <th>Course Code</th>
     <th>Name</th>
@@ -17,7 +36,7 @@
     </thead>
     <tr data-ng-repeat="courses in courselists|filter:coursename">
         <td><input type="checkbox"
-                    ng-model="courses.selected"
+                    ng-model="courses.selected" class="form-check-input"
                    />
         {{courses.id}}</td>
         <td>{{courses.coursecode}}</td>
@@ -25,13 +44,14 @@
         <td>{{courses.program}}</td>
     </tr>
     </table>
-
-
-Saved results:<br>{{courseNameArray}}
 <input type="hidden" name="courselist" value=" {{courseNameArray}}"/>
 <br>
-<input type="submit"  ng-click="coursesave()"/>
-</form>
+<input type="submit" class="btn btn-primary" ng-click="coursesave()" />
+           </div>
+       <div class="col-md-3"></div>
+       </div>
+        </form>
 {%endverbatim%}
+
 
 

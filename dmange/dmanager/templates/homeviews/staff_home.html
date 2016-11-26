@@ -1,32 +1,50 @@
 <html>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js">
+<head>
+   <link rel="stylesheet" href="../../static/css/bootstrap.min.css">
+  <script src="../../static/js/jquery.min.js"></script>
+  <script src="../../static/js/bootstrap.min.js"></script>
+    <script src="../../static/js/angular.min.js"></script>
+<script src="../../static/js/angular-route.js">
 </script>
-    <h1>Welcome to staff home</h1>
-    <table>
-        <tr>        
-    <td>
-    <ul>
-    <li><a href="#viewcourses">View Courses</a></li>
-    <li><a href="#viewstudents">View Students</a></li>
-    <li><a href="#viewfaculties">View Faculty</a></li>
-    <li><a href="#viewdepartments">View Departments</a></li>
-    <li><a href="#viewstaffs">View Staff</a></li>
+</head>
+    <body>
+     <nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#">DMange</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">View <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+         <li><a href="#viewcourses">Courses</a></li>
+    <li><a href="#viewstudents">Students</a></li>
+    <li><a href="#viewfaculties">Faculty</a></li>
+    <li><a href="#viewdepartments">Departments</a></li>
+    <li><a href="#viewstaffs">Staff</a></li>
+        </ul>
+      </li>
+         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Add <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+         <li><a href="#addcourse">Course</a></li>    
+    <li><a href="#addstudent">Student</a></li>
+    <li><a href="#addfaculty">Faculty</a></li>
+    <li><a href="#adddepartment">Departments</a></li>
+    <li><a href="#addstaff">Staff</a></li>
+        </ul>
+      </li>
+    
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">{{username}} <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+         <li><a href="logout">Logout</a></li>       
+          </ul>
+        </li>
+    
+     
     </ul>
-    </td>
-                           
-    <td>
-    <ul>
-    <li><a href="#addcourse">Add Course</a></li>    
-    <li><a href="#addstudent">Add Student</a></li>
-    <li><a href="#addfaculty">Add Faculty</a></li>
-    <li><a href="#adddepartment">Add Departments</a></li>
-    <li><a href="#addstaff">Add Staff</a></li>
-    </ul>
-    </td>
-            
-        </tr>
-        </table>
+  </div>
+</nav>    
+        
     {% if studentsadded %}
     <p>{{studentsadded}} Student(s) added  successfully</p>
     {%endif%}
@@ -46,12 +64,8 @@
     {% if facultydeleted %}
     <p>{{facultydeleted}} staff with {{facultyid}} deleted  successfully</p>
     {%endif%}
-    <table>
-    <tr>
-        <td>Welcome User</td><td><b>{{username}}</b></td><td><a href="logout">Logout</a></td>
-        </tr>
-    </table>
-    <body ng-app="staffpage">
+    
+    <div ng-app="staffpage">
      {% verbatim %}
 
         
@@ -118,5 +132,11 @@ app.controller('StaffController', function($scope){
         </script>
    
     {%endverbatim%}
-         </body>
+         </div>
+        
+{%verbatim%}
+ 
+    {%endverbatim%}        
+        
+        </body>
 <html>

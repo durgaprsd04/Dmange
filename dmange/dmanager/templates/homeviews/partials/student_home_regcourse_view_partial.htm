@@ -1,6 +1,6 @@
 <h2>List of Available Courses</h2>
 <div  ng-init='regcourselists={{courselist}}'>
-<form action="student_register_course" method="post">
+<form>
     {% csrf_token %}
 </p>{{searchlabel}}
 {%verbatim%}
@@ -13,31 +13,37 @@
    <th>Course end Time</th>
    <th>Course Name</th>
    <th>Course Faculty name</th>
+    <th>Course Department name</th>
     </thead>
-     <tr data-ng-repeat="courses in regcourselists|filter:regcoursename">
+     <tr data-ng-repeat="regcourses in regcourselists|filter:regcoursename">
         <td><input type="checkbox"
-                    ng-model="courses.selected"
+                    ng-model="regcourses.selected"
                    />
-        {{courses.id}}</td>
+        {{regcourses.id}}</td>
     <td>
-    {{courses.courseid}}
+    {{regcourses.coursecode}}
+    </td>
+   
+    <td>
+    {{regcourses.start}}
     </td>
     <td>
-    {{courses.start}}
+    {{regcourses.end}}
     </td>
     <td>
-    {{courses.end}}
+    {{regcourses.coursename}}
     </td>
     <td>
-    {{courses.coursename}}
+    {{regcourses.facultyname}}
     </td>
     <td>
-    {{courses.facultyname}}
+    {{regcourses.departmentname}}
     </td>
 </tr>
 </table>
-<input type="hidden" name="registeredcourselist" value=" {{courseNameArray}}"/>
+Array {{regCourseNameArray}}
+<input type="hidden" name="registeredcourselist" value=" {{regcourseNameArray}}"/>
 <br>
-<input type="submit"  class="btn btn-primary" ng-click="coursesave()" />
+<input type="submit"  class="btn btn-primary" ng-click="regcoursesave()" />
 </form>
 {%endverbatim%}

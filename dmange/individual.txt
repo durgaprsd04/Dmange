@@ -151,3 +151,41 @@ after they register they will be populated in the reg studtns.After this these s
 
 The above mentioned set up and basic CURD for staff is the UI threshold. After that UI should be improved so that shippiong the project should be kept in mind.
 
+
+Sat-11-2016
+-----------
+As of now we can select the courses and add a certain timing to that then move it to reg coures. Once the student can move this to reg_students, we are basically done. I think this can be done tomorrow. Once that is done the basic workflow would be finshed with the desired stuff.
+
+After that we need to add 
+
+    styles
+    test suites
+    finish it with functionalities mentioned in the code.
+    
+sun-12-2016
+-----------
+with the availablity of styles we were able to produce what was required of the tool. Now we can add styles and make it into a proper workable software.
+
+
+--As of 2016-11-26--
+The tool that was created can add new students, staff faculties courses and such. Once they are added they can be viewed.
+
+Faculties can move created courses of the selective department to a particular timeframe to to be reg courses.
+
+after that students can choose from these courses.
+
+Staff has all the addition permissions. faculty has course addition permission.
+
+
+Things to do. 
+-------------
+edit and delete permisssion to staff.
+edit permission on self role for student and faculty.
+
+Faculty option to make course global/local.
+edit his own profile.
+view students registered in his department/ his courses
+
+
+student de-register course.
+view global courses and ability to register those.

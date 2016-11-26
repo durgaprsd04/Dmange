@@ -39,7 +39,9 @@ urlpatterns = [
     
     #Faculty pages 
     url(r'^faculty_course_partial_view$', views.faculty_course_partial_view),
-    url(r'^student_course_partial_view', views.list_courses2),
+    #student  views
+    url(r'^student_course_partial_view', views.student_course_partial_view),
+    url(r'^student_regcourse_partial_view',views.student_regcourse_partial_view),
     
    
     

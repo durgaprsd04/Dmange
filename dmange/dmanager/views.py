@@ -168,24 +168,49 @@ def  faculty_course_partial_view(request):
         courseobj.name = course.name
         courseobj.program = course.program
         listofcourses.append(vars(courseobj))
-    return render(request, 'homeviews/partials/faculty_home_course_view_partial_unregistered.htm',{'courselist':json.dumps(listofcourses), 'searchlabel':'Search Courses'})
-
-
-def  list_courses2(request):
-    listofcourses=reg_course.objects.all()
-    l=[]
+    d = faculty.objects.values_list('id','facultyname')
+    listoffacs=[]
+    for k in d:
+        fobj = listforstaff()
+        fobj.fid = k[0]
+        fobj.fname = k[1]
+        listoffacs.append(vars(fobj))
     
-    for c1 in range(0,len(listofcourses)):
+    return render(request, 'homeviews/partials/faculty_home_course_view_partial_unregistered.htm',{'courselist':json.dumps(listofcourses),  'listoffacs':json.dumps(listoffacs)})
+
+
+def  student_course_partial_view(request):
+    listofregcourses=reg_course.objects.all()
+    studentuser = student.objects.get(rollnumber = request.user.username)
+    l=[]
+    for course in listofregcourses:
+        c1 = courses.objects.get(id=course.courseid_id)
+        if(c1.department.departmentcode == studentuser.department.departmentcode and len(reg_student.objects.filter(regcourseid_id=course.id,studentid_id=student.objects.get(rollnumber=request.user.username).id))==0):
+            c = coursemodelforreg()
+            c.id = course.id
+            c.courseid = courses.objects.get(id=course.courseid_id).coursecode
+            c.start = str(course.start)
+            c.end = str(course.end)
+            c.facultyname= faculty.objects.get(id=course.facultyid_id).facultyname
+            c.coursename = courses.objects.get(id=course.courseid_id).name
+            l.append(vars(c))
+    return render(request, 'homeviews/partials/student_home_course_view_partial.htm',{'courselist':json.dumps(l), 'searchlabel':'Search courses'})
+
+def student_regcourse_partial_view(request):
+    l=[]
+    for regc in reg_student.objects.filter(studentid_id=student.objects.get(rollnumber='B16008EC').id):
+        course =courses.objects.get(id=reg_course.objects.get(id=regc.regcourseid_id).courseid_id)
         c = coursemodelforreg()
-        c.id =  listofcourses[c1].id
-        c.start = listofcourses[c1].start
-        c.end = listofcourses[c1].end
-        c.courseid_id = courses.objects.values_list('name',flat=True).filter(id=listofcourses[c1].courseid_id)[0]
-        c.facultyid_id =faculty.objects.values_list('facultyname',flat=True).filter(id=listofcourses[c1].facultyid_id)[0]
-        l.append(c)
-    return render(request, 'homeviews/partials/student_home_course_view_partial.htm',{'courselist':l})
-
-
+        c.id = course.id
+        c.coursecode = course.coursecode
+        c.coursename = course.name
+        c.departmentname = department.objects.get(id=course.department_id).departmentname
+        c.start  = str(reg_course.objects.get(id=regc.regcourseid_id).start)
+        c.end = str(reg_course.objects.get(id=regc.regcourseid_id).end)
+        c.facultyname = faculty.objects.get(id=reg_course.objects.get(id=regc.regcourseid_id).facultyid_id).facultyname
+        l.append(vars(c))
+    return render(request,'homeviews/partials/student_home_regcourse_view_partial.htm',{'courselist':json.dumps(l), 'searchlabel':'Search courses','username':request.user.username})
+        
 
 #Listing courses for stafff
 def list_course_staff(request):
@@ -252,11 +277,16 @@ def list_staff_staff(request):
 
 ## Basic registration process.
 def student_register_course(request):
-    courseid = request.GET['courseid']
-    studentrollnumber = request.user.username.split('_')[1]
-    studentid= student.objects.get(rollnumber=studentrollnumber).id
-    reg_student.objects.create(regcourseid_id=courseid,studentid_id=studentid)
-    return render(request, 'homeviews/student_home.html',{'studentname':request.user.first_name})
+    courseid = request.POST['registeredcourselist']
+    courseid = courseid[1:-1]
+    courseid = courseid.split(',')
+    coursesregistered =0
+    studentrollnumber = request.user.username
+    for courseidforreg in courseid:
+        studentid= student.objects.get(rollnumber=studentrollnumber).id
+        reg_student.objects.create(regcourseid_id=courseidforreg,studentid_id=studentid)
+        coursesregistered  = coursesregistered+1
+    return render(request, 'homeviews/student_home.html',{'username':request.user.first_name, 'coursesregistered':coursesregistered})
 
 
 def faculty_takeup_course(request):
@@ -285,15 +315,21 @@ def faculty_takeup_course(request):
         return render(request, 'homeviews/faculty_home.html',{})
     
 def faculty_moveto_regcourses(request):
-    inputcourseid = request.GET['courseid']
+    courselists = request.POST['courselist']
+    courselists = courselists[2:-2]
+    courselists = courselists.split('","')
     startdate = request.POST['startdate']
     enddate = request.POST['enddate']
     inputfacultyid=request.POST['faculty_id']
-    uselessvariable=inputfacultyid
     #courses1 = courses.objects.get(id=inputcourseid)
     #courses1.reg_course_set.create(facultyid_id=inputfacultyid, start=startdate, end = enddate)
-    
-    return render(request, 'homeviews/faculty_home.html',{'uselessvariable':uselessvariable})
+    coursesmovedtoreg = 0
+    for coursecodes in courselists:
+        courses1 = courses.objects.get(coursecode=coursecodes) 
+        courses1.reg_course_set.create(facultyid_id=inputfacultyid, start=startdate,end=enddate)
+        coursesmovedtoreg = coursesmovedtoreg + 1
+        #coursesmovedtoreg=coursesmovedtoreg+coursecodes
+    return render(request, 'homeviews/faculty_home.html',{'coursemovedtoreg':coursesmovedtoreg})
     
 def facutly_home(request):
     #courseid = request.GET['courseid']
@@ -322,11 +358,11 @@ def loginpage(request):
             if(user is not None):
                 login(request,user)
                 if('fac_' in user.username):
-                    return render(request, 'homeviews/faculty_home.html',{'somename':request.user.first_name})
+                    return render(request, 'homeviews/faculty_home.html',{'username':request.user.first_name})
                 elif('staff_' in user.username):
                     return render(request, 'homeviews/staff_home.html',{'username':request.user.first_name})
                 elif(student.objects.get(rollnumber=user.username)is not None):
-                    return render(request, 'homeviews/student_home.html',{'studentname':request.user.first_name})
+                    return render(request, 'homeviews/student_home.html',{'username':request.user.username})
             else:
                 pass
                 return render(request, 'loginpage.html', {})

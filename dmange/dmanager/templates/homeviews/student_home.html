@@ -1,34 +1,82 @@
 <!DOCTYPE html>
 <html>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js">
+    <head>
+   <link rel="stylesheet" href="../../static/css/bootstrap.min.css">
+  <script src="../../static/js/jquery.min.js"></script>
+  <script src="../../static/js/bootstrap.min.js"></script>
+    <script src="../../static/js/angular.min.js"></script>
+<script src="../../static/js/angular-route.js">
 </script>
-<a href="logout">Logout</a>
-    <p></p>
-{{studentname}}
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+      <div class="navbar-header">
+      <a class="navbar-brand" href="#">DMange</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>   
+      <ul class="nav navbar-nav">
+             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">View <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+    <li><a href="#courseviewstudent">Available Course(s)</a></li>
+    <li><a href="#regcourseviewstudent">Registered Course(s)</a></li>
+        </ul>
+      </li>
+             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">{{username}} <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+         <li><a href="logout">Logout</a></li>       
+          </ul>
+        </li>
+    
+      </ul>
+          </div>
+    </nav>
+
 {% verbatim %}
-<body ng-app="myApp">
-
-For list of courses please click <a href="#courseview">here.</a>
-   
+<div ng-app="myApp">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
 <div ng-view></div>
-
+        </div>
+<div class="col-md-2"></div>
 <script>
  //   var django_variables = {};
 //django_variables.djangoVar = {{ courselist }};
 var app = angular.module("myApp", ['ngRoute']);
 app.config(function($routeProvider) {
     $routeProvider
-    .when("/", {
-        templateUrl : "homeviews/partials/student_home_course_view_partial.htm",
-    })
-    .when("/courseview", {
+    .when("/courseviewstudent", {
         templateUrl : "student_course_partial_view",
-        
-    });
+        controller:"courseViewController"
+    }).when("/regcourseviewstudent",{
+        templateUrl:"student_regcourse_partial_view",
+        controller:"regCourseViewController"
+            })
 });
+app.controller("courseViewController", function ($scope) 
+{
+   $scope.coursesave = function(){
+    $scope.courseNameArray = [];
+    angular.forEach($scope.regcourselists, function(courses){
+      if (courses.selected) $scope.courseNameArray.push(courses.id);
+    });
+  };    
+});   
+app.controller("regCourseViewController", function ($scope) 
+{
+   $scope.regcoursesave = function(){
+    $scope.regCourseNameArray = [];
+    angular.forEach($scope.regcourselists, function(regcourses){
+      if (regcourses.selected) $scope.regCourseNameArray.push(regcourses.id);
+    });
+  };    
+});   
 </script>
 {% endverbatim %}
-  
-</body>
+    {% if coursesregistered %}
+    <br>{{coursesregistered}} courses moved to registered courses.
+{%endif%}
+    </div>
+    </body>
 </html>

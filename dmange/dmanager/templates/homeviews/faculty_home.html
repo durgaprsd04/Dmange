@@ -1,14 +1,41 @@
 <!DOCTYPE html>
 <html>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js">
+<head>
+   <link rel="stylesheet" href="../../static/css/bootstrap.min.css">
+  <script src="../../static/js/jquery.min.js"></script>
+  <script src="../../static/js/bootstrap.min.js"></script>
+    <script src="../../static/js/angular.min.js"></script>
+<script src="../../static/js/angular-route.js">
 </script>
+</head>
+<body>    
+   <nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+      <div class="navbar-header">
+      <a class="navbar-brand" href="#">DMange</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>   
+      <ul class="nav navbar-nav">
+             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">View <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+    <li><a href="#viewcourse">View Course</a></li>
+    <li><a href="#addcourse">Add Course</a></li>
+        </ul>
+      </li>
+             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">{{username}} <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+         <li><a href="logout">Logout</a></li>       
+          </ul>
+        </li>
     
-    Welcome Faculty {{username}} <a href="logout">Logout</a>
- <a href="#addcourse">Add Course</a>
- <a href="#viewcourse">View Course</a>
+      </ul>
+          </div>
+    </nav>
+
+ 
 {% verbatim %}
-<body ng-app="facultyPage">
+<div ng-app="facultyPage">
 
 <div ng-view></div>
 
@@ -31,12 +58,15 @@ app.controller("courseViewController", function ($scope)
    $scope.coursesave = function(){
     $scope.courseNameArray = [];
     angular.forEach($scope.courselists, function(courses){
-      if (courses.selected) $scope.courseNameArray.push(courses.name);
+      if (courses.selected) $scope.courseNameArray.push(courses.coursecode);
     });
   };    
 });
 </script>
 {% endverbatim %}
-
-</body>
+  {% if coursemovedtoreg %}
+    <br>{{coursemovedtoreg}} courses moved to registered courses.
+{%endif%}
+</div>
+    </body>
 </html>
