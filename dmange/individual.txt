@@ -177,6 +177,12 @@ after that students can choose from these courses.
 Staff has all the addition permissions. faculty has course addition permission.
 
 
+Things done.
+===========
+Added actions to home page and stats page.
+made panel closable.
+
+
 Things to do. 
 -------------
 edit and delete permisssion to staff.

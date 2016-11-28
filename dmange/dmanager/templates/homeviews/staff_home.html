@@ -11,10 +11,10 @@
      <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-        <a class="navbar-brand" href="#">DMange</a>
+        <a class="navbar-brand" href="#statsview">DMange</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
+      <li class="active"><a href="#staffhomeview">Home</a></li>
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">View <span class="caret"></span></a>
         <ul class="dropdown-menu">
          <li><a href="#viewcourses">Courses</a></li>
@@ -36,7 +36,8 @@
     
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">{{username}} <span class="caret"></span></a>
         <ul class="dropdown-menu">
-         <li><a href="logout">Logout</a></li>       
+         <li><a href="logout">Logout</a></li>   
+         <li><a href="#editprofilestaff">Edit Profile</a></li>
           </ul>
         </li>
     
@@ -44,30 +45,11 @@
     </ul>
   </div>
 </nav>    
-        
-    {% if studentsadded %}
-    <p>{{studentsadded}} Student(s) added  successfully</p>
-    {%endif%}
-    {% if coursesadded  %}
-    <p>{{coursesadded}} Course(s) added  successfully</p>
-    {%endif%}
-    {% if facultyadded %}
-    <p>{{facultyadded}} Facultie(s) added  successfully</p>
-    {%endif%}
-    {% if departmentsadded %}
-    <p>{{departmentsadded}} Department(s) added  successfully</p>
-    {%endif%}
-    {% if staffadded %}
-    <p>{{staffadded}} staff(s) added  successfully</p>
-    {%endif%}
-    
-    {% if facultydeleted %}
-    <p>{{facultydeleted}} staff with {{facultyid}} deleted  successfully</p>
-    {%endif%}
-    
     <div ng-app="staffpage">
-     {% verbatim %}
-
+    <div class="col-md-12">
+    
+      {% verbatim %}
+        
         
     <div ng-view></div>
        
@@ -102,6 +84,17 @@ app.config(function($routeProvider) {
         templateUrl:"staff_department_input_form"    
     }).when("/addstaff",{
         templateUrl:"staff_staff_input_form"    
+    }).when("/editprofilestaff",{
+        templateUrl:"staff_edit_profile",
+        controller:"staffEditProfileController"
+    }).when("/statsview",{
+        templateUrl:"staff_stats_view_partial"
+    }).when("/staffhomeview",{
+        templateUrl:"staff_home_view"
+    
+    
+    }).when("/editprofilestaff",{
+      templateUrl:"staff_edit_profile"  
     })
     ;
 }); 
@@ -125,18 +118,118 @@ app.controller('StaffController', function($scope){
    $scope.searchlabel="Search Staff"; 
     //$scope.facultylists = '{{fac2}}';
 });
+app.controller("staffEditProfileController", function($scope){
+   $scope.headerwarning = "Edit Profile"; 
+});
 
 
 
 
         </script>
    
-    {%endverbatim%}
+    {%endverbatim%}  
+        </div>
+     <div class="col-md-12">
+         <div class="col-md-4"></div>
+         <div class="col-md-4"></div>
+         <div class="col-md-4">
+        
+    {% if studentsadded %}
+             <div class="alert alert-warning alert-dismissible fade in" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+     <p>{{studentsadded}} Student(s) added  successfully</p>
+     </div>
+    {%endif%}
+           
+     
+    {% if coursesadded  %}
+          <div class="panel panel-success" id="coursepanel">
+  <div class="panel-heading">   
+    {{coursesadded}} Course(s) added  successfully
+       <button type="button" class="close" 
+data-target="#coursepanel" 
+data-dismiss="alert">
+<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+</button>
+              </div>
          </div>
+    {%endif%}
+       
         
-{%verbatim%}
- 
-    {%endverbatim%}        
+    {% if facultyadded %}
+          <div class="panel panel-success">
+  <div class="panel-heading">
+    {{facultyadded}} Facultie(s) added  successfully
+    <button type="button" class="close" 
+data-target="#coursepanel" 
+data-dismiss="alert">
+<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+</button>
+              </div>
+         </div>
+    {%endif%}
+           
         
+    {% if departmentsadded %}
+          <div class="panel panel-success" id="departmentpanel">
+  <div class="panel-heading">
+    {{departmentsadded}} Department(s) added  successfully.
+      <button type="button" class="close" 
+data-target="#departmentpanel" 
+data-dismiss="alert">
+<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+</button>
+       </div>
+         </div>
+    {%endif%}
+            
+        
+    {% if staffadded %}
+          <div class="panel panel-success" id="staffpanel">
+  <div class="panel-heading">
+    {{staffadded}} staff(s) added  successfully
+      <button type="button" class="close" 
+data-target="#staffpanel" 
+data-dismiss="alert">
+<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+</button>
+         </div>
+         </div>
+    {%endif%}
+    {% if staffedited %}
+           
+         <div class="panel panel-warning" id="facultypanel">
+  <div class="panel-heading">
+    {{staffedited}} staff profile edited successfully.
+      <button type="button" class="close" 
+data-target="#facultypanel" 
+data-dismiss="alert">
+<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+</button>
+         </div>
+         </div>
+    {%endif%}         
+        
+    {% if facultydeleted %}
+           
+         <div class="panel panel-warning" id="facultypanel">
+  <div class="panel-heading">
+    {{facultydeleted}} staff with {{facultyid}} deleted  successfully.
+      <button type="button" class="close" 
+data-target="#facultypanel" 
+data-dismiss="alert">
+<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+</button>
+         </div>
+         </div>
+    {%endif%}
+          
+
+        </div> 
+</div>    
+        
+         </div>        
         </body>
 <html>

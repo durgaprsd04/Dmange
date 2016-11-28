@@ -8,6 +8,7 @@ from django.db.models import Max
 from django.contrib.auth.models import User
 import re
 import json
+import datetime
 
 # Create your views here.
 ##adding stuff to the DB. Currently called only by staff
@@ -120,7 +121,7 @@ def put_staff(request):
             staffadded=0
             try:
                 dpstaff.staff_set.create(staffname=staffname, username = staffusername)
-                user = User.objects.create_user('staff_'+staffusername+str(staff.objects.get(username=staffusername).id), '',staffusername+str(staff.objects.get(username=staffusername).id))
+                user = User.objects.create_user('staff_'+staffusername+'_'+str(staff.objects.get(username=staffusername).id), '',staffusername+str(staff.objects.get(username=staffusername).id))
                 staffadded=1
             except Exception as e:
                 staffadded=0
@@ -273,7 +274,46 @@ def list_staff_staff(request):
         stafflist.username = c.username
         l.append(vars(stafflist))
     return render(request, 'homeviews/partials/staff_home_staff_view_partial.htm',{'stafflist':json.dumps(l)})
-
+def list_stats_staff(request):
+    studentsadded = User.objects.filter(date_joined__gt=datetime.datetime.today().strftime('%Y-%m-%d')).count()
+    facultiesadded= User.objects.filter(date_joined__gt=datetime.datetime.today().strftime('%Y-%m-%d'), username__contains ='fac').count() 
+    staffsadded = User.objects.filter(date_joined__gt=datetime.datetime.today().strftime('%Y-%m-%d'), username__contains ='staff_').count()
+    studentsadded= studentsadded-(facultiesadded+staffsadded)
+    totalcoursecount = courses.objects.all().count()
+    regcoursecount= reg_course.objects.all().count()
+    return  render(request, 'homeviews/partials/staff_stats_view_partial.htm',{'studentsadded':studentsadded,'facultiesadded':facultiesadded,'staffsadded':staffsadded,'totalcoursecount':totalcoursecount,'regcoursecount':regcoursecount})
+def staff_home_view(request):
+    return render(request, 'homeviews/partials/staff_home_view_partial.htm')
+#Editing profiles
+def staff_edit_profile(request):
+    if(request.method=='GET'):
+        departments = department.objects.all()
+        l=[]
+        for c in departments:
+            departmentlist = listforstaff()
+            departmentlist.id = c.id
+            departmentlist.name = c.departmentname
+            l.append(vars(departmentlist))
+        staffname = staff.objects.get(username = request.user.username.split('_')[1]).staffname
+        staffid = staff.objects.get(username = request.user.username.split('_')[1]).id
+        staffusername = request.user.username.split('_')[1]
+        return render(request,'homeviews/partials/staff_editprofile_view_partial.htm',{'departmentlist':json.dumps(l),'staffname':json.dumps(staffname),'staffusername':json.dumps(staffusername),'staffid':staffid})
+    elif(request.method=='POST'):
+        staffname = request.POST["staffname"]
+        dpid = request.POST["selecteddepartment"]
+        staffusername = request.POST['staffusername']
+        staffid=request.POST['staffid']
+        oldusername= staff.objects.get(id=staffid).username
+        staffedited=0
+        if(department.objects.filter(id=dpid).exists()):
+            User.objects.filter(username='staff_'+oldusername+"_"+staffid).update(username='staff_'+staffusername+"_"+staffid)
+            
+            User.objects.filter(username='staff_'+staffusername+"_"+staffid).update(first_name=staffname.split(' ')[0]) 
+            
+            User.objects.filter(username='staff_'+staffusername+"_"+staffid).update(last_name=staffname.split(' ')[1])
+            staff.objects.filter(id=staffid).update(username=staffusername, staffname=staffname, department_id=dpid)
+            staffedited=staffedited+1
+        return render(request, 'homeviews/staff_home.html',{'staffedited':staffedited,'username':request.user.first_name})
 
 ## Basic registration process.
 def student_register_course(request):

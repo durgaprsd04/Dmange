@@ -29,6 +29,11 @@ urlpatterns = [
     url(r'^staff_faculty_partial_view', views.list_faculty_staff),
     url(r'^staff_department_partial_view', views.list_department_staff),
     url(r'^staff_staff_partial_view', views.list_staff_staff),
+    #adding actions ot home button and DMange buttons
+    url(r'^staff_stats_view_partial', views.list_stats_staff),
+    url(r'^staff_home_view', views.staff_home_view),
+    #Editing profiles
+    url(r'^staff_edit_profile', views.staff_edit_profile),
     
     #deleting a faculty
     url(r'staff_faculty_delete', views.staff_faculty_delete),

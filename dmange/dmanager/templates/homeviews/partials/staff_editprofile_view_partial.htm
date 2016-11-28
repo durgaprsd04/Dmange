@@ -1,0 +1,28 @@
+<div ng-init='departmentlist={{departmentlist}}'/>
+<div ng-init='staffname={{staffname}}'/>
+<div ng-init='staffusername={{staffusername}}'/>
+<div ng-init='staffid={{staffid}}'/>
+
+<div class="col-md-4"></div>
+<div class="col-md-4">
+
+<form action="staff_edit_profile" method="post">
+   {% csrf_token %}
+    {%verbatim%}
+    </p>Name<input type="text" name="staffname" value="{{staffname}}" class="form-control" />
+
+</p>Department
+<select id="departmentselect" ng-model="selecteddepartment" class="form-control"  name="selecteddepartment">
+      <option ng-repeat="department in departmentlist" value="{{department.id}}">{{department.name}}</option>
+    </select>
+
+
+</p>Staffusername<input type="text" name="staffusername" value="{{staffusername}}" class="form-control"/>
+</p><input type="hidden" value="{{staffid}}" name="staffid"/>
+</p>
+<input type="submit"  class="btn btn-primary" value="Update"/>
+</form>
+
+{%endverbatim%}
+</div>
+<div class="col-md-4"></div>
