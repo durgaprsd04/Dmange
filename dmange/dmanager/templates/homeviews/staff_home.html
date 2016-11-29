@@ -22,6 +22,7 @@
     <li><a href="#viewfaculties">Faculty</a></li>
     <li><a href="#viewdepartments">Departments</a></li>
     <li><a href="#viewstaffs">Staff</a></li>
+    
         </ul>
       </li>
          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Add <span class="caret"></span></a>
@@ -31,6 +32,14 @@
     <li><a href="#addfaculty">Faculty</a></li>
     <li><a href="#adddepartment">Departments</a></li>
     <li><a href="#addstaff">Staff</a></li>
+        </ul>
+      </li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Registered Coures<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+         <li><a href="#regcoursewise">Coursewise</a></li>    
+         <li><a href="#regstudentwise">Student based</a></li>
+        <li><a href="#regfacultywise">Faculty based</a></li>
+        <li><a href="#regdepartmentwise">Department based</a></li>
         </ul>
       </li>
     
@@ -44,7 +53,7 @@
      
     </ul>
   </div>
-</nav>    
+</nav>   
     <div ng-app="staffpage">
     <div class="col-md-12">
     
@@ -95,7 +104,17 @@ app.config(function($routeProvider) {
     
     }).when("/editprofilestaff",{
       templateUrl:"staff_edit_profile"  
+   
+    }).when("/regcoursewise",{
+        templateUrl:"staff_regcourse_partial_view"
+    }).when("/regstudentwise",{
+        templateUrl:"staff_regcoursestudent_partial_view"
+    }).when("/regfacultywise",{
+        templateUrl:"staff_regcoursefaculty_partial_view"
+    }).when("/regdepartmentwise",{
+        templateUrl:"staff_regcoursedepartment_partial_view"
     })
+
     ;
 }); 
 app.controller('FacultyController', function($scope){

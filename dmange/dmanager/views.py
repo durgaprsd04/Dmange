@@ -38,7 +38,6 @@ def put_student(request):
     else:
         form = StudentForm()
         return render(request, 'homeviews/partials/staff_student_input_form.htm', {'form': form.as_p()})
-
 def put_department(request):
     if(request.method=='POST'):
         form = DepartmentForm(request.POST)
@@ -199,7 +198,7 @@ def  student_course_partial_view(request):
 
 def student_regcourse_partial_view(request):
     l=[]
-    for regc in reg_student.objects.filter(studentid_id=student.objects.get(rollnumber='B16008EC').id):
+    for regc in reg_student.objects.filter(studentid_id=student.objects.get(rollnumber=request.user.username).id):
         course =courses.objects.get(id=reg_course.objects.get(id=regc.regcourseid_id).courseid_id)
         c = coursemodelforreg()
         c.id = course.id
@@ -284,6 +283,46 @@ def list_stats_staff(request):
     return  render(request, 'homeviews/partials/staff_stats_view_partial.htm',{'studentsadded':studentsadded,'facultiesadded':facultiesadded,'staffsadded':staffsadded,'totalcoursecount':totalcoursecount,'regcoursecount':regcoursecount})
 def staff_home_view(request):
     return render(request, 'homeviews/partials/staff_home_view_partial.htm')
+#Course views
+def list_regcourse_coursewise(request):
+    listofregcourse = reg_course.objects.all()
+    l=[]
+    for j in listofregcourse:
+        listofregcourses = listforstaff()
+        listofregcourses.starttime = str(j.start)
+        listofregcourses.endtime = str(j.end)
+        listofregcourses.coursename = courses.objects.get(id=j.courseid_id).name
+        listofregcourses.coursecode = courses.objects.get(id=j.courseid_id).coursecode
+        listofregcourses.department = department.objects.get(id=courses.objects.get(id=j.courseid_id).department_id).departmentname
+        listofregcourses.facultyname = faculty.objects.get(id=j.facultyid_id).facultyname
+        l.append(vars(listofregcourses))
+    return render(request, 'homeviews/partials/staff_home_regcoursecoursewise_view_partial.htm',{'regcourselist':json.dumps(l),'searchlabel':'Search Label'})
+
+def list_regcourse_departmentwise(request):
+    c = department.objects.all()
+    l=[]
+    for j in c:
+        j1 = listforstaff()
+        j1.name = j.departmentname
+        j1.departmentcode = j.departmentcode
+        d = courses.objects.filter(department_id=j.id)
+        l2=[]
+        for j2 in d:
+            if(reg_course.objects.filter(courseid_id=j2.id).exists()):
+                j3 = listforstaff()
+                j3.coursename = j2.name
+                j3.coursecode = j2.coursecode
+                j3.facultyname = faculty.objects.get(id=reg_course.objects.get(courseid_id=j2.id).facultyid_id).facultyname
+                l2.append(vars(j3))
+        
+        j1.regcourselist= l2
+        l.append(vars(j1))
+    return render(request, 'homeviews/partials/staff_home_regcoursedepartmentwise_view_partial.htm',{'departments':json.dumps(l)})    
+
+def list_regcourse_facultywise(request):
+    pass
+def list_regcourse_studentwise(request):
+    pass    
 #Editing profiles
 def staff_edit_profile(request):
     if(request.method=='GET'):

@@ -18,17 +18,23 @@ urlpatterns = [
     #Staff addition and view .Basic CURD permission for staff.
     ###adding data via partials for staff. no redirections
     url(r'^staff_student_input_form$', views.put_student, name='put_student'),
-    
     url(r'^staff_course_input_form$', views.put_course, name='put_course'),
     url(r'^staff_department_input_form',views.put_department, name='put_department'),
     url(r'^staff_faculty_input_form',views.put_faculty, name='put_faculty'),
     url(r'^staff_staff_input_form',views.put_staff, name='put_staff'),
+   
     #Staff course views. Applicable for faculties.
     url(r'^staff_course_partial_view', views.list_course_staff),
     url(r'^staff_student_partial_view', views.list_student_staff),
     url(r'^staff_faculty_partial_view', views.list_faculty_staff),
     url(r'^staff_department_partial_view', views.list_department_staff),
     url(r'^staff_staff_partial_view', views.list_staff_staff),
+    ###Viewing registered courses various aggregation levels.abs
+    url(r'^staff_regcourse_partial_view', views.list_regcourse_coursewise),
+    url(r'^staff_regcoursestudent_partial_view',views.list_regcourse_studentwise),
+    url(r'^staff_regcoursefaculty_partial_view',views.list_regcourse_facultywise),
+    url(r'^staff_regcoursedepartment_partial_view',views.list_regcourse_departmentwise),
+
     #adding actions ot home button and DMange buttons
     url(r'^staff_stats_view_partial', views.list_stats_staff),
     url(r'^staff_home_view', views.staff_home_view),

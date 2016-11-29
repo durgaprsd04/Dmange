@@ -1,0 +1,36 @@
+<h2>List of Available RegisteredCourses</h2>
+<div  ng-init='regcourselists={{regcourselist}}'>
+</p>{{searchlabel}}
+{%verbatim%}
+     <input type="text" ng-model="regcoursename"/>
+    <table id="regcoursetable" class="table table-hover">
+    <thead class="thead thead-inverse">
+    <th> Code</th>
+    <th> Name</th>
+   <th> Start Time</th>
+   <th> End time</th>
+   <th> Department</th>
+   <th> Faculty</th>
+    </thead>
+     <tr data-ng-repeat="regcourses in regcourselists|filter:regcoursename">
+    <td>
+     {{regcourses.coursecode}}
+    </td>
+    <td>
+    {{regcourses.coursename}}
+    </td>
+    <td>
+    {{regcourses.starttime}}
+    </td>
+    <td>
+    {{regcourses.endtime}}
+    </td>
+    <td>
+    {{regcourses.department}}
+    </td>
+    <td>
+    {{regcourses.facultyname}}
+    </td>
+</tr>
+</table>
+{%endverbatim%}

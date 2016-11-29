@@ -181,17 +181,30 @@ Things done.
 ===========
 Added actions to home page and stats page.
 made panel closable.
-
+edit profile for staff
 
 Things to do. 
 -------------
-edit and delete permisssion to staff.
-edit permission on self role for student and faculty.
+profile permisssion to students and faculties
+course level,department level, student level view for facutly  staff
+--minor
+export to csv
+-------
+de-register a course
+remove courses from reg_course
+global local coures
+hod/fa approval last day of editing
 
-Faculty option to make course global/local.
-edit his own profile.
-view students registered in his department/ his courses
+----complicating rquirements.
+introducing credit system.
+minimum credit requirement.
+grade system.
+minimum point requirement
+cgpa calculation
 
 
-student de-register course.
-view global courses and ability to register those.
+---Small changes
+Change faculty option
+multifaculty courses
+
+
