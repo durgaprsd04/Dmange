@@ -1,0 +1,39 @@
+<div ng-init="faculties ={{facultylist}}"/>
+{%verbatim%}
+<div class="col-md-4"></div>
+<div class="col-md-4">
+Select Faculty Name:
+<form>
+<select class="form-control" data-ng-model="faculty">
+    <option   data-ng-repeat="x in faculties" value="{{x.id}}">{{x.name}}</option>
+</select>
+
+<input type="submit" class="btn btn-primary" value="Get Courses" data-ng-click="getFacultyInfo()"/>
+<form>
+    </div>
+<div class="col-md-4"></div>
+<div class="col-md-12">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        List of Departments having Courses
+        <div data-ng-repeat="x in faculties | filter:faculty">
+            {{x.department}}
+        </div>
+<table class="table table-hover" data-ng-hide="isHidden()">
+    <thead class="thead thead-inverse">
+        <th>Code</th>
+        <th>Name</th>
+        <th>Start time</th>
+        <th>End time</th>
+    </thead>
+<tr data-ng-repeat="regcourse in regfacultylists">
+    <td>{{regcourse.coursecode}}</td>
+    <td>{{regcourse.coursename}}</td>
+    <td>{{regcourse.starttime}}</td>
+    <td>{{regcourse.endtime}}</td>
+</tr>
+</table>
+</div>
+<div class="col-md-1"></div>
+<div>
+{%endverbatim%}

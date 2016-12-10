@@ -7,6 +7,8 @@ urlpatterns = [
     url(r'^facultyhome$', views.facutly_home, name='faculty_home'),
 	url(r'^faculty_takeup_course',views.faculty_takeup_course),
     url(r'^faculty_moveto_regcourses',views.faculty_moveto_regcourses),
+    url(r'^edit_profile_faculty',views.edit_profile_faculty),
+    url(r'^faculty_course_partial_view$', views.faculty_course_partial_view),
     
     
     url(r'^addcourse$', views.put_course, name='put_course'),
@@ -31,10 +33,11 @@ urlpatterns = [
     url(r'^staff_staff_partial_view', views.list_staff_staff),
     ###Viewing registered courses various aggregation levels.abs
     url(r'^staff_regcourse_partial_view', views.list_regcourse_coursewise),
-    url(r'^staff_regcoursestudent_partial_view',views.list_regcourse_studentwise),
+    url(r'^staff_regcoursestudent_partial_view',views.list_regcourse_studentwise1),
     url(r'^staff_regcoursefaculty_partial_view',views.list_regcourse_facultywise),
+    url(r'^staff_regcoursefaculty_partial_courseview', views.list_regcourse_facultywise1),
     url(r'^staff_regcoursedepartment_partial_view',views.list_regcourse_departmentwise),
-
+    url(r'^staff_regcoursedepartment_partial_courseview',views.list_regcourse_studentwise),
     #adding actions ot home button and DMange buttons
     url(r'^staff_stats_view_partial', views.list_stats_staff),
     url(r'^staff_home_view', views.staff_home_view),
@@ -48,12 +51,11 @@ urlpatterns = [
     url(r'^logout',views.logout_user, name='logout_user'),
     #url(r'^listcourses$', views.list_courses, name='list_courses'),
     
-    #Faculty pages 
-    url(r'^faculty_course_partial_view$', views.faculty_course_partial_view),
+    
     #student  views
     url(r'^student_course_partial_view', views.student_course_partial_view),
     url(r'^student_regcourse_partial_view',views.student_regcourse_partial_view),
-    
+    url(r'^student_regcourse_deregister_action',views.student_regcourse_deregister_action),
    
     
     

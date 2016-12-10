@@ -37,7 +37,7 @@
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Registered Coures<span class="caret"></span></a>
         <ul class="dropdown-menu">
          <li><a href="#regcoursewise">Coursewise</a></li>    
-         <li><a href="#regstudentwise">Student based</a></li>
+         <li><a href="#regstudentwise">Studentwise</a></li>
         <li><a href="#regfacultywise">Faculty based</a></li>
         <li><a href="#regdepartmentwise">Department based</a></li>
         </ul>
@@ -54,16 +54,19 @@
     </ul>
   </div>
 </nav>   
+    
     <div ng-app="staffpage">
+   
     <div class="col-md-12">
     
+     
       {% verbatim %}
         
-        
+    
+    
     <div ng-view></div>
-       
-        <script>
-        
+    
+       <script>    
         var app = angular.module("staffpage", ['ngRoute']);
 app.config(function($routeProvider) {
     $routeProvider
@@ -108,9 +111,11 @@ app.config(function($routeProvider) {
     }).when("/regcoursewise",{
         templateUrl:"staff_regcourse_partial_view"
     }).when("/regstudentwise",{
-        templateUrl:"staff_regcoursestudent_partial_view"
+        templateUrl:"staff_regcoursestudent_partial_view",
+        controller:"RegStudentController"
     }).when("/regfacultywise",{
-        templateUrl:"staff_regcoursefaculty_partial_view"
+        templateUrl:"staff_regcoursefaculty_partial_view",
+        controller:"RegFacultyController"
     }).when("/regdepartmentwise",{
         templateUrl:"staff_regcoursedepartment_partial_view"
     })
@@ -140,10 +145,65 @@ app.controller('StaffController', function($scope){
 app.controller("staffEditProfileController", function($scope){
    $scope.headerwarning = "Edit Profile"; 
 });
+app.controller("RegStudentController", function($scope, $http)
+{
+    
+$scope.getStudentInfo = function()
+{
+    $http.get('staff_regcoursedepartment_partial_courseview?rollnumber='+$scope.rollnumber).then( function(response)
+    {
+        $scope.regcourses = response.data;
+       $scope.regcourselists = [];
 
-
-
-
+       angular.forEach(response.data, function(data1)
+       {
+           angular.forEach(data1, function(value,key){
+               if(key=="list")
+               {
+                   $scope.regcourselists.push(value);
+               }
+               if(key=="studentname")
+               {
+                   $scope.studenname = value;
+               }
+               if($scope.regcourselists.length==0)
+               {
+                   $scope.showtag=true;
+               }
+               
+           });
+       });
+        $scope.isVisible  = function(name){
+          return false;
+        };
+    });  
+};
+});
+app.controller("RegFacultyController", function($scope, $http)
+{
+    $scope.isValue=false;
+     $scope.regfacultylists=[];
+    $scope.getFacultyInfo = function()
+    {
+        $http.get('staff_regcoursefaculty_partial_courseview?fid='+$scope.faculty).then(function(response)
+        {
+             $scope.regfacultylists=response.data;
+        });
+        
+    };
+    $scope.isHidden = function()
+        {
+            if($scope.regfacultylists.length!=0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }       
+        };
+    
+});
         </script>
    
     {%endverbatim%}  

@@ -194,7 +194,7 @@ def  student_course_partial_view(request):
             c.facultyname= faculty.objects.get(id=course.facultyid_id).facultyname
             c.coursename = courses.objects.get(id=course.courseid_id).name
             l.append(vars(c))
-    return render(request, 'homeviews/partials/student_home_course_view_partial.htm',{'courselist':json.dumps(l), 'searchlabel':'Search courses'})
+    return render(request, 'homeviews/partials/student_home_course_view_partial.htm',{'courselist':json.dumps(l), 'searchlabel':'Search courses','username':request.user.username})
 
 def student_regcourse_partial_view(request):
     l=[]
@@ -210,9 +210,21 @@ def student_regcourse_partial_view(request):
         c.facultyname = faculty.objects.get(id=reg_course.objects.get(id=regc.regcourseid_id).facultyid_id).facultyname
         l.append(vars(c))
     return render(request,'homeviews/partials/student_home_regcourse_view_partial.htm',{'courselist':json.dumps(l), 'searchlabel':'Search courses','username':request.user.username})
-        
 
-#Listing courses for stafff
+def student_regcourse_deregister_action(request):
+    deregcourselist = request.POST["registeredcourselist"]
+    deregcourselist = deregcourselist[1:-1]
+    deregcourselist = deregcourselist.split(',')
+    deregcourselist = map(int, deregcourselist)
+    l=[]
+    for j in deregcourselist:
+        l.append(reg_course.objects.get(courseid_id=j).id)
+    c1 =  reg_student.objects.filter(studentid_id=student.objects.get(rollnumber=request.user.username).id, regcourseid_id__in=l)
+    d=len(c1)
+    c1.delete()
+    return render(request, 'homeviews/student_home.html',{'numofdeletedcourses':str(d),'username':request.user.username})
+
+#Listing courses for staff
 def list_course_staff(request):
     coursesum = courses.objects.all()
     l=[]
@@ -316,14 +328,62 @@ def list_regcourse_departmentwise(request):
                 l2.append(vars(j3))
         
         j1.regcourselist= l2
+        if(len(j1.regcourselist)==0):
+            j1.nocourse = "true"
+        else:
+            j1.nocourse = "false"
         l.append(vars(j1))
     return render(request, 'homeviews/partials/staff_home_regcoursedepartmentwise_view_partial.htm',{'departments':json.dumps(l)})    
 
 def list_regcourse_facultywise(request):
-    pass
-def list_regcourse_studentwise(request):
-    pass    
+    listoffacs = faculty.objects.all()
+    l=[]
+    for j in listoffacs:
+        if(reg_course.objects.filter(facultyid_id=j.id).exists()):
+            c = listforstaff()
+            c.id  = j.id
+            c.name = j.facultyname
+            c.department = department.objects.get(id=j.department_id).departmentname
+            l.append(vars(c))
+    return render(request, 'homeviews/partials/staff_home_regcoursefacultywise_view_partial.htm',{'facultylist':json.dumps(l)})
+
+def list_regcourse_facultywise1(request):
+    fid = request.GET["fid"]
+    listofregcoures = reg_course.objects.filter(facultyid_id=fid)
+    l=[]
+    for j in listofregcoures:
+        c  = listforstaff()
+        c.coursecode = courses.objects.get(id = j.courseid_id).coursecode
+        c.coursename = courses.objects.get(id = j.courseid_id).name
+        c.starttime = str(j.start)
+        c.endtime = str(j.end)
+        l.append(vars(c))
+    return HttpResponse(json.dumps(l))
+
+def list_regcourse_studentwise1(request):
+    return render(request,'homeviews/partials/staff_home_regcoursestudent_view_partial.htm') 
 #Editing profiles
+
+def list_regcourse_studentwise(request):
+    coursesregistered = reg_student.objects.filter(studentid_id=student.objects.get(rollnumber=request.GET['rollnumber']).id)
+    studentname = student.objects.get(rollnumber=request.GET["rollnumber"]).name
+    l =[]
+    for j in coursesregistered:
+        c = listforstaff()
+        c.starttime = str(reg_course.objects.get(id=j.regcourseid_id).start)
+        c.endtime = str(reg_course.objects.get(id=j.regcourseid_id).end)
+        c.coursename = courses.objects.get(id=reg_course.objects.get(id=j.regcourseid_id).courseid_id).name
+        c.program = courses.objects.get(id=reg_course.objects.get(id=j.regcourseid_id).courseid_id).program
+        c.coursecode = courses.objects.get(id=reg_course.objects.get(id=j.regcourseid_id).courseid_id).coursecode
+        c.faculty = faculty.objects.get(id=reg_course.objects.get(id=j.regcourseid_id).facultyid_id).facultyname
+        l.append(vars(c))
+    c1 = listforstaff()
+    c1.list = l 
+    c1.studentname = studentname
+    l2 = []
+    l2.append(vars(c1))
+    return HttpResponse(json.dumps(l2))
+
 def staff_edit_profile(request):
     if(request.method=='GET'):
         departments = department.objects.all()
@@ -409,7 +469,10 @@ def faculty_moveto_regcourses(request):
         coursesmovedtoreg = coursesmovedtoreg + 1
         #coursesmovedtoreg=coursesmovedtoreg+coursecodes
     return render(request, 'homeviews/faculty_home.html',{'coursemovedtoreg':coursesmovedtoreg})
-    
+
+def edit_profile_faculty(request):
+    pass
+
 def facutly_home(request):
     #courseid = request.GET['courseid']
     #coursecode = request.GET['coursecode']

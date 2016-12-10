@@ -25,7 +25,8 @@
       </li>
              <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">{{username}} <span class="caret"></span></a>
         <ul class="dropdown-menu">
-         <li><a href="logout">Logout</a></li>       
+         <li><a href="logout">Logout</a></li>
+                
           </ul>
         </li>
     
@@ -77,6 +78,10 @@ app.controller("regCourseViewController", function ($scope)
     {% if coursesregistered %}
     <br>{{coursesregistered}} courses moved to registered courses.
 {%endif%}
+    {% if numofdeletedcourses %}
+    <br>{{numofdeletedcourses}} courses de-registered.
+{%endif%}
+
     </div>
     </body>
 </html>

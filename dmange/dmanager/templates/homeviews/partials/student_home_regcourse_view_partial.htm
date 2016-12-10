@@ -1,6 +1,6 @@
 <h2>List of Available Courses</h2>
 <div  ng-init='regcourselists={{courselist}}'>
-<form>
+<form action="student_regcourse_deregister_action" method="POST">
     {% csrf_token %}
 </p>{{searchlabel}}
 {%verbatim%}
@@ -41,8 +41,7 @@
     </td>
 </tr>
 </table>
-Array {{regCourseNameArray}}
-<input type="hidden" name="registeredcourselist" value=" {{regcourseNameArray}}"/>
+<input type="hidden" name="registeredcourselist" value="{{regCourseNameArray}}"/>
 <br>
 <input type="submit"  class="btn btn-primary" ng-click="regcoursesave()" />
 </form>

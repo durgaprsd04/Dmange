@@ -182,18 +182,37 @@ Things done.
 Added actions to home page and stats page.
 made panel closable.
 edit profile for staff
+reg courses added. 
+
+reg course views
+----------------
+courselevel
+studentlevel
+facultylevel
+department level
+
+Things done as of 8th Dec
+de-register a course show if students are registered.
+
 
 Things to do. 
 -------------
-profile permisssion to students and faculties
-course level,department level, student level view for facutly  staff
+faculty/staff
+==============
+
+unregister them from faculty/staff side.
+edit profile
+
+student
+=======
+unregister course based on if the registration is open or not. 
+edit profile
+global courses
+
+
 --minor
 export to csv
--------
-de-register a course
-remove courses from reg_course
-global local coures
-hod/fa approval last day of editing
+
 
 ----complicating rquirements.
 introducing credit system.
@@ -203,8 +222,30 @@ minimum point requirement
 cgpa calculation
 
 
----Small changes
-Change faculty option
-multifaculty courses
+--- A slight alteration in plan.
+
+This has been a wonderful work till now. Now  I need to take a decision whether to keep 
+it here or expand. 
+
+so I have decided to go with expanding the whole set up to a higher level. Which means
+classifying things into a things and non-nthings to non-things. Such are the setups that we
+are to follow. To begin with, I will organise the code by removing unwanted functions if anya
+and add TEST cases to the current to set up. After that we will proceed with editing profile for 
+the faculty which will be the last change before js validations. 
+
+JS validations
+-------------
+We will use several JS validations provided by angular preferably to finish this. This part 
+is more importantly a test to our knoweldge in angular. Now as this is done we will learn 
+more about organizing angular js and making the whole thing more testable and using of protractor js
+and such. 
+
+Once JS validations seems goo enough we will start creating several SPA to know how much this goes. 
+
+Final Stage
+===========
+At this stage you will know enough to add more to the main application of python to complicate 
+it enough to have requiremtns mentioed earlier included. Once you include it the whole set up 
+becomes really easier. So we can add the last functionalities mentioned without much trouble.
 
 

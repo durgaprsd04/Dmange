@@ -25,7 +25,8 @@
       </li>
              <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">{{username}} <span class="caret"></span></a>
         <ul class="dropdown-menu">
-         <li><a href="logout">Logout</a></li>       
+         <li><a href="logout">Logout</a></li>   
+         <li><a href="#editprofilefaculty">Edit Profile</a></li>    
           </ul>
         </li>
     
@@ -51,6 +52,8 @@ app.config(function($routeProvider) {
     .when("/viewcourse",{
         templateUrl:"faculty_course_partial_view",
         controller:"courseViewController"
+    }).when("/editprofilefaculty",{
+        templateUrl:"edit_profile_faculty"
     })
 });  
 app.controller("courseViewController", function ($scope) 
