@@ -14,12 +14,13 @@ An open source software for managing academic activities.
 * Daily/Routine changes would include updating this file.
 
 ## Structure 20200410
-| Student       | Faculty          | Course      | Department |
-| ------------- |:----------------:| -----------:|-----------:|
-| roll number   | fac id           | course id   | code       |
-| name          | name             | Department  | Name       |
-| Department    | Department       | Course name |            |
-
+| Student       | Faculty          | Course      | Department |Courses4Year |Reg4year     |
+| ------------- |:----------------:| -----------:|-----------:|------------:|------------:|
+| roll number   | fac id           | course id   | code       | course_id   | c4_id       |
+| name          | name             | Department  | Name       | facutlty_id | roll_number |
+| Department    | Department       | Course name |            | Year        |             |  
+|               |                  |             |            | c4_id       |             |
+    
 ## Action Items
 1. Faculties create courses.
 2. Students register for them.
