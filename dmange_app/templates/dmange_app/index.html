@@ -1,1 +1,10 @@
-a test index page
+
+{% if list_of_courses %}
+<ul>
+{% for course in list_of_courses %}
+    <li><a href="{%url 'dmange_app:create_course' course.id%}">{{ course.course_name }}</a></li>
+{% endfor %}
+</ul>
+{% else %}
+<p>No courses are available.</p>
+{% endif %}

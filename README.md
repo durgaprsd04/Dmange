@@ -25,6 +25,9 @@ An open source software for managing academic activities.
 1. Faculties create courses.
 2. Students register for them.
 
+#### work log 20200414
+1. minor python tweaks for 1
+
 
 ### Initial ideas setting up
 As of now we are planning to do a repository based on the JSP servlet. There are several issues associated with the same, but the idea behind remains a UI friendly interface preferably in JSP with functionalities embedded within the same, quite similar to  our DSS. There should be separate database mostly postgres for the work done.

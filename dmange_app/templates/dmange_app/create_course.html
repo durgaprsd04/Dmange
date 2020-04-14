@@ -1,0 +1,16 @@
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="#" method="post">
+{% csrf_token %}
+<input type="text" name="course_code" value="{{course.course_code}}"/>
+<input type="text" name="course_name" value="{{course.course_name}}"/>
+{% for faculty in list_of_faculties %}
+    <select id="cars">
+        <option value="{{faculty.faculty_id}}}">{{faculty.faculty_name}}</option>
+    </select>
+    <input type="text" name="department_id" value="{{faculty.department_code}}"/> 
+{% endfor %}
+
+<label>Academic year</label></lable> <input type="text" name="academic_year" />
+<input type="submit" value="Vote">
+</form>

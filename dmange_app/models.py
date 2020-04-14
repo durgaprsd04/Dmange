@@ -4,6 +4,8 @@ from django.db import models
 class Department(models.Model):
     department_code = models.CharField(max_length=200)
     department_name = models.CharField(null=False,max_length=200)
+    def __str__(self):
+        return self.department_name
 
 class Course(models.Model):
     course_code = models.CharField(max_length=200)
