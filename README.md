@@ -27,6 +27,9 @@ An open source software for managing academic activities.
 
 #### work log 20200414
 1. minor python tweaks for 1
+#### work log 20200416
+1. 1 almost done - not really good but aggreable.
+
 
 
 ### Initial ideas setting up

@@ -25,7 +25,7 @@ class Student(models.Model):
 
 class CourseForYear(models.Model):
     course_code = models.ForeignKey(Course, on_delete=models.CASCADE)
-    faculty_code = models.CharField(null=False, max_length=200)
+    faculty_id = models.CharField(null=False, max_length=200)
     year  = models.CharField(null=False,max_length=200)
 
 class CourseRegistrationForYear(models.Model):
