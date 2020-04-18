@@ -1,0 +1,26 @@
+{% load static %}
+<link rel="stylesheet" href="{%static 'css/bootstrap.min.css' %}" >
+
+
+<div class="container">
+    <!-- Example row of columns -->
+    <div class="row">
+        <div class="col-md-4">
+        </div>
+      <div class="col-md-4">
+        <form class="form-signin" action="{% url 'login:login_user' %}" method="post">
+            {% csrf_token %}
+            <h1 class="h3 mb-3 font-weight-normal">Please sign in {{test}}</h1>
+            <label for="inputEmail" class="sr-only">Username</label>
+            <input type="text" id="userName" name="userName" class="form-control" placeholder="Email address" required autofocus>
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+           <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
+        </form>        
+       </div>
+       <div class="col-md-4">
+      </div> 
+        </div>
+        </div>
+

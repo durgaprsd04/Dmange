@@ -18,7 +18,7 @@ An open source software for managing academic activities.
 | ------------- |:----------------:| -----------:|-----------:|------------:|------------:|
 | roll number   | fac id           | course id   | code       | course_id   | c4_id       |
 | name          | name             | Department  | Name       | facutlty_id | roll_number |
-| Department    | Department       | Course name |            | Year        |             |  
+| Department    | Department       | Course name |            | Year        | approved    |  
 |               |                  |             |            | c4_id       |             |
     
 ## Action Items
@@ -30,6 +30,12 @@ An open source software for managing academic activities.
 #### work log 20200416
 1. 1 almost done - not really good but aggreable.
 
+#### work log 2020418 
+1. raise jira for this altassian 
+  https://dmange.atlassian.net/secure/RapidBoard.jspa?rapidView=1&projectKey=DMAN&selectedIssue=DMAN-2
+2. created login app.
+3. created courses for year
+4. Faculties can approve/decline courses registered by students
 
 
 ### Initial ideas setting up
