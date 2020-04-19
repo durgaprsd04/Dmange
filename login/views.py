@@ -3,8 +3,9 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
-from django.contrib.auth import authenticate, login
-
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import redirect
+from django.template import RequestContext
 
 # Create your views here.
 def index(request):
@@ -19,13 +20,14 @@ def login_user(request):
 
     if user is not None:
         login(request,user)
-        return HttpResponse('user exists')
+        return redirect('/dmange_app/', context_instance=RequestContext(request))
     else:
         return HttpResponse('no user')
 
 
-def logout(request):
-    pass
+def logout_user(request):
+    logout(request)
+    return HttpResponse('logged out successfully')
 
 def change_password(request):
     pass

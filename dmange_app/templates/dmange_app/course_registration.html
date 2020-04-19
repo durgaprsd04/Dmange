@@ -1,18 +1,60 @@
-<table style="width:100%">
-    <tr>
-        <td>Course Code</td>
-        <td>{{course.course_code}}</td>
-    </tr>
-    <tr>
-        <td>Faculty name</td>
-        <td>{{faculty.faculty_name}}</td>
-    </tr>
-    <tr>
-        <td>Faculty code</td>
-        <td>{{faculty.faculty_id}}</td>
-    </tr>
-    <tr>
-        <td>Department name</td>
-        <td>{{course.department_code}}</td>
-    </tr>
-</table>
+{%extends "base.html" %}
+
+{%block content%}
+<form action="{%url 'dmange_app:finish_course_registration' %}" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <div class="container">
+            <!-- Example row of columns -->
+            <div class="row">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-8">
+
+                    <table class="table table-hover">
+                        <tr>
+                            <td>Course Code</td>
+                            <td>{{course.course_code}}</td>
+                        </tr>
+                        <tr>
+                            <td>Course for the year Id</td>
+                            <td><input type="text" readonly="true" name="course_for_year_id"
+                                    value="{{course_for_year_id}}" /> </td>
+                        </tr>
+                        <tr>
+                            <td>Faculty name</td>
+                            <td>{{faculty.faculty_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Faculty code</td>
+                            <td>{{faculty.faculty_id}}</td>
+                        </tr>
+                        <tr>
+                            <td>Department name</td>
+                            <td>{{course.department_code}}</td>
+                        </tr>
+                        <tr>
+                            <td>Year of Course</td>
+                            <td>{{year}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+                <div class="col-md-5">
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</form>
+{%endblock%}

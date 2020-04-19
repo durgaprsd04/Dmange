@@ -8,5 +8,8 @@ urlpatterns = [
     path('<int:course_id>/', views.create_course, name='create_course'),
     path('finish_course', views.finish_course, name='finish_course'),
     path('course_registration/<int:course_code>', views.course_registration, name='course_registration'),
+    path('finish_course_registration', views.finish_course_registration, name='finish_course_registration'),
+    path('approve_course', views.approve_course, name='approve_course'),
+    path('approve_course_with_id/<int:course_id>', views.approve_course_with_id, name='approve_course_with_id'),
 ]
 

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{%block content %}
+{% if list_of_courses_pending_approval %}
+{% for reg_course in list_of_courses_pending_approval %}
+    <li><a href="#">{{ reg_course.student_id }}</a></li>
+{% endfor %}
+{% else %}
+<p>No courses are available.</p>
+{% endif %}
+{% endblock%}

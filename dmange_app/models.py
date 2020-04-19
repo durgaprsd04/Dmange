@@ -19,11 +19,16 @@ class Facutly(models.Model):
     faculty_id = models.CharField(max_length=200)
     faculty_name = models.CharField(null=False,max_length=200)
     department_code = models.ForeignKey(Department, on_delete = models.CASCADE)
+    def __str__(self):
+        return "%s %s %s"% (self.faculty_id, self.faculty_name, self.department_code) 
+
 
 class Student(models.Model):
     student_id = models.CharField(max_length=200)
     student_name = models.CharField(null=False, max_length=200)
     department_code = models.ForeignKey(Department, on_delete=models.CASCADE)
+    def __str__(self):
+        return "%s %s %s"% (self.student_id, self.student_name, self.department_code)
 
 class CourseForYear(models.Model):
     course_code = models.ForeignKey(Course, on_delete=models.CASCADE)
@@ -33,4 +38,5 @@ class CourseForYear(models.Model):
 class CourseRegistrationForYear(models.Model):
     course_for_year_id = models.ForeignKey(CourseForYear, on_delete = models.CASCADE)
     student_id =  models.CharField(max_length=200)
+    approved = models.BooleanField(null=False, default=False)
     

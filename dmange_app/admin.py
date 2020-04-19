@@ -7,3 +7,4 @@ from .models import Course, Department, Facutly, Student
 admin.site.register(Department)
 admin.site.register(Course)
 admin.site.register(Facutly)
+admin.site.register(Student)

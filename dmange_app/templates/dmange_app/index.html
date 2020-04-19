@@ -1,25 +1,16 @@
-<h3> courses to create - faculties</h3>
-
+{% extends "base.html" %}
+{%block content %}
 {% if list_of_courses %}
 <ul>
 {% for course in list_of_courses %}
+    {% if user_type == 'Faculty'%}
     <li><a href="{%url 'dmange_app:create_course' course.id%}">{{ course.course_name }}</a></li>
-{% endfor %}
+    {%else%}
+    <li><a href="{%url 'dmange_app:course_registration' course.id%}">{{ course.course_code }}</a></li>
+    {%endif%}
+    {% endfor %}
 </ul>
 {% else %}
 <p>No courses are available.</p>
 {% endif %}
-
-
-<h3>courses to register - Students </h3>
-
-
-{% if list_of_courses_for_year %}
-<ul>
-{% for course_for_year in list_of_courses_for_year %}
-    <li><a href="{%url 'dmange_app:course_registration' course_for_year.id%}">{{course_for_year.course_code}}</a></li>
-{% endfor %}
-</ul>
-{% else %}
-<p>No courses are available for year.</p>
-{% endif %}
+{% endblock%}
