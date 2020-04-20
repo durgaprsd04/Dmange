@@ -1,9 +1,37 @@
 {% extends "base.html" %}
 {%block content %}
 {% if list_of_courses_pending_approval %}
+<form action="{%url 'dmange_app:approve_courses' %}" method="POST">
+    {% csrf_token %}
 {% for reg_course in list_of_courses_pending_approval %}
-    <li><a href="#">{{ reg_course.student_id }}</a></li>
+<table class="table table-hover">
+    
+    <tr>
+        <td><input type="checkbox" id="row{{reg_course.course_id}}" name="course_reg_{{reg_course.course_id}}" value="{{reg_course.course_id}}"></td>
+        <td>{{reg_course.student_id}}</td>
+        <td>{{reg_course.student_name}}</td>
+        <td>{{reg_course.course_code}}</td>
+        <td>{{reg_course.course_name}}</td>
+    </tr>
+</table>
+
+
+
 {% endfor %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary">Register</button>
+        </div>
+        <div class="col-md-5">
+        </div>
+    </div>
+    </div>
+    
+</form>
+
 {% else %}
 <p>No courses are available.</p>
 {% endif %}

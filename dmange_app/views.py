@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.template import loader
-from .models import Course, Facutly, CourseForYear, CourseRegistrationForYear
+from .models import Course, Facutly, CourseForYear, CourseRegistrationForYear, Student
 import datetime
 # Create your views here.
 from django.http import HttpResponse
@@ -9,6 +9,14 @@ class UserAction:
     def __init__(self, action, action_name):
         self.action_href = action
         self.action_name = action_name
+
+class PendingApprovalCourseDetails:
+    def __init__(self,course_id,  student_id, student_name, course_code, course_name):
+        self.course_id = course_id
+        self.student_id = student_id
+        self.student_name = student_name
+        self.course_code = course_code
+        self.course_name = course_name
 
 def index(request):
     list_of_courses = Course.objects.all()
@@ -75,16 +83,30 @@ def approve_course(request):
     user_name = request.user.username
     if 'F' in user_name:
         list_of_courses_pending_approval =[]
+        student_details ={}
         courses_list = CourseForYear.objects.filter(faculty_id = user_name)
         reg_courses_list = CourseRegistrationForYear.objects.filter(approved = False)
         for course in courses_list:
             for reg_course in reg_courses_list:
                 if(course.course_code.course_code == reg_course.course_for_year_id.course_code.course_code):
-                    list_of_courses_pending_approval.append(CourseRegistrationForYear.objects.get(id=reg_course.id))
-    context={'list_of_courses_pending_approval':list_of_courses_pending_approval}
+                    student_name = Student.objects.get(student_id = reg_course.student_id).student_name
+                    course_code = reg_course.course_for_year_id.course_code.course_code
+                    course_name = reg_course.course_for_year_id.course_code.course_name
+                    pending_course = PendingApprovalCourseDetails(reg_course.id, reg_course.student_id, student_name, course_code, course_name )
+                    list_of_courses_pending_approval.append(pending_course)
+
+    context={'list_of_courses_pending_approval':list_of_courses_pending_approval, 'student_details':student_details}
     template = loader.get_template("dmange_app/pending_approval.html")
     return HttpResponse(template.render(context, request))
             
 
-def approve_course_with_id(request, course_id):
-    pass
+def approve_courses(request):
+    list_of_approved_courses= []
+    for key in request.POST.keys():
+        if 'course_reg_' in key:
+            list_of_approved_courses.append(request.POST[key])
+    for course_id in list_of_approved_courses:
+        course = CourseRegistrationForYear.objects.get(id=course_id)
+        course.approved = True
+        course.save()
+    return HttpResponse('Course approved')
